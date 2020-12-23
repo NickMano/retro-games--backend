@@ -1,0 +1,8 @@
+{
+  "name": "platzi-video-api",
+  "version": "1.0.0",
+  "description": "API for Platzi Video app",
+  "main": "index.js",
+  "author": "Nicolas Manograsso <nmanograsso@gmail.com>",
+  "license": "MIT"
+}
