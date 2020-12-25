@@ -1,10 +1,11 @@
-const express = require('express')
+const express = require('express');
+const { config } = require('./config/index');
+const gamesApi = require('./routes/games');
+
 const app = express();
-const {config} = require('./config/index')
-const gamesApi = require('./routes/games')
 
-gamesApi(app)
+gamesApi(app);
 
-app.listen(config.port, ()=> {
-    console.log(`Listening http://localhost:${config.port}`);
-})
+app.listen(config.port, () => {
+  console.log(`Listening http://localhost:${config.port}`);
+});
