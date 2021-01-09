@@ -20,10 +20,10 @@ const gamesApi = (app) => {
   });
 
   router.get('/:gameId', async (req, res, next) => {
-    const { movieId } = req.params;
+    const { gameId } = req.params;
 
     try {
-      const games = await gamesServices.getGame(movieId);
+      const games = await gamesServices.getGame(gameId);
 
       res.status(200).json({
         data: games,
@@ -35,10 +35,10 @@ const gamesApi = (app) => {
   });
 
   router.post('/', async (req, res, next) => {
-    const { body: movie } = req;
+    const { body: game } = req;
 
     try {
-      const createdGameId = await gamesServices.createGame(movie);
+      const createdGameId = await gamesServices.createGame(game);
 
       res.status(201).json({
         data: createdGameId,
