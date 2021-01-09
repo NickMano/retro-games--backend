@@ -11,6 +11,7 @@ const mock = [{
   images: [''],
   company: 'Square Enix',
   players: '1-8',
+  isOnline: true,
 }];
 
 module.exports = mock;
