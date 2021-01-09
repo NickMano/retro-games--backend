@@ -1,28 +1,32 @@
-const gamesMock = require('../utils/mocks/gamesMock');
+const MongoLib = require('../lib/mongo');
+
+const collection = 'movies';
+const mongoDB = new MongoLib();
 
 const gamesService = {
-  async getGames() {
-    const games = await Promise.resolve(gamesMock);
+  async getGames({ tags }) {
+    const query = tags && { tags: { $in: tags } };
+    const games = await mongoDB.getAll(collection, query);
     return games || [];
   },
 
-  async getGame() {
-    const game = await Promise.resolve(gamesMock[0]);
+  async getGame({ gameId }) {
+    const game = await mongoDB.get(collection, gameId);
     return game || {};
   },
 
-  async createGame() {
-    const createGameId = await Promise.resolve(gamesMock[0].id);
+  async createGame({ game }) {
+    const createGameId = await mongoDB.create(collection, game);
     return createGameId;
   },
 
-  async updateGame() {
-    const updatedGameId = await Promise.resolve(gamesMock[0].id);
+  async updateGame({ gameId, game }) {
+    const updatedGameId = await mongoDB.update(collection, gameId, game);
     return updatedGameId;
   },
 
-  async deleteGame() {
-    const deletedGameId = await Promise.resolve(gamesMock[0].id);
+  async deleteGame({ gameId }) {
+    const deletedGameId = await mongoDB.delete(collection, gameId);
     return deletedGameId;
   },
 };
