@@ -6,12 +6,16 @@ const {
   updateGameSchema,
 } = require('../utils/schemas/games');
 const validationHandler = require('../utils/middleware/validationHandler');
+const cacheResponse = require('../utils/cacheResponse');
+const { SIXTY_MINUTES_IN_SECONDS, FIVE_MINUTES_IN_SECONDS } = require('../utils/time');
 
 const gamesApi = (app) => {
   const router = express.Router();
   app.use('/api/games', router);
 
   router.get('/', async (req, res, next) => {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
+
     const { tags } = req.query;
 
     try {
@@ -29,6 +33,8 @@ const gamesApi = (app) => {
     '/:gameId',
     validationHandler({ gameId: gameIdSchema }, 'params'),
     async (req, res, next) => {
+      cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
+
       const { gameId } = req.params;
 
       try {
