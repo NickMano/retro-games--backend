@@ -1,6 +1,6 @@
 const MongoLib = require('../lib/mongo');
 
-const collection = 'movies';
+const collection = 'games';
 const mongoDB = new MongoLib();
 
 const gamesService = {
