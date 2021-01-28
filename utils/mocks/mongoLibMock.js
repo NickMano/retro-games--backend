@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const sinon = require('sinon');
 
