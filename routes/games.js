@@ -38,7 +38,7 @@ const gamesApi = (app) => {
       const { gameId } = req.params;
 
       try {
-        const games = await gamesServices.getGame(gameId);
+        const games = await gamesServices.getGame({ gameId });
 
         res.status(200).json({
           data: games,
@@ -57,7 +57,7 @@ const gamesApi = (app) => {
       const { body: game } = req;
 
       try {
-        const createdGameId = await gamesServices.createGame(game);
+        const createdGameId = await gamesServices.createGame({ game });
 
         res.status(201).json({
           data: createdGameId,
@@ -78,7 +78,7 @@ const gamesApi = (app) => {
       const { body: game } = req;
 
       try {
-        const updatedGameId = await gamesServices.updateGame(gameId, game);
+        const updatedGameId = await gamesServices.updateGame({ gameId, game });
 
         res.status(200).json({
           data: updatedGameId,
@@ -97,7 +97,7 @@ const gamesApi = (app) => {
       const { gameId } = req.params;
 
       try {
-        const deletedGameId = await gamesServices.deleteGame(gameId);
+        const deletedGameId = await gamesServices.deleteGame({ gameId });
 
         res.status(200).json({
           data: deletedGameId,

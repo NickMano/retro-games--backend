@@ -10,12 +10,12 @@ const gamesService = {
     return games || [];
   },
 
-  async getGame(gameId) {
+  async getGame({ gameId }) {
     const game = await mongoDB.get(collection, gameId);
     return game || {};
   },
 
-  async createGame(game) {
+  async createGame({ game }) {
     const createGameId = await mongoDB.create(collection, game);
     return createGameId;
   },
