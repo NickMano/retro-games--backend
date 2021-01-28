@@ -12,7 +12,7 @@ const gameVideosSchema = joi.array().items(joi.string().uri());
 const gameImagesSchema = joi.array().items(joi.string().uri());
 const gameCompanySchema = joi.string().max(120);
 const gamePlayersSchema = joi.string().max(5);
-const gameIsOnlineSchema = joi.string().max(5);
+const gameIsOnlineSchema = joi.bool();
 
 const createGameSchema = {
   title: gameTitleSchema.required(),
