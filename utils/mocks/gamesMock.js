@@ -57,7 +57,7 @@ const gamesServiceMock = {
 
   async createGame({ game }) {
     // eslint-disable-next-line no-underscore-dangle
-    return Promise.resolve(game);
+    return Promise.resolve(gamesMock[0]._id);
   },
 };
 

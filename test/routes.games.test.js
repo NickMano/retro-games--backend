@@ -51,8 +51,10 @@ describe('routes - games', () => {
   });
 
   describe('POST /games', () => {
-    it('should respond with status code 200', (done) => {
-      request.get(`/api/games/${gamesMock[0]._id}`).expect(200, done);
+    it('should respond with status code 201', (done) => {
+      request.post('/api/games')
+        .send(gameWithoutIdMock)
+        .expect(201, done);
     });
 
     it('should respond with the created game', (done) => {
@@ -62,7 +64,7 @@ describe('routes - games', () => {
           if (err) done(err);
 
           assert.deepStrictEqual(res.body, {
-            data: gameWithoutIdMock,
+            data: gamesMock[0]._id,
             message: 'game created',
           });
 
