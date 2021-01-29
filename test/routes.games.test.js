@@ -72,4 +72,27 @@ describe('routes - games', () => {
         });
     });
   });
+
+  describe('DELETE /games/:gameId', () => {
+    const gameId = gamesMock[0]._id;
+
+    it('should respond with status code 200', (done) => {
+      request.delete(`/api/games/${gameId}`)
+        .expect(200, done);
+    });
+
+    it('should respond with the id of deleted game', (done) => {
+      request.delete(`/api/games/${gameId}`)
+        .end((err, res) => {
+          if (err) done(err);
+
+          assert.deepStrictEqual(res.body, {
+            data: gameId,
+            message: 'game deleted',
+          });
+
+          done();
+        });
+    });
+  });
 });

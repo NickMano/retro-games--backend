@@ -1,5 +1,5 @@
 const gamesMock = [{
-  _id: '6011fc46ae43b0a7f740e5b0',
+  _id: '100000000000000000000000',
   title: 'Brawlhalla',
   genre: ['Action'],
   release: 2019,
@@ -14,7 +14,7 @@ const gamesMock = [{
   isOnline: true,
 },
 {
-  _id: '6011fc46ae43b0a7f740e5bf',
+  _id: '200000000000000000000000',
   title: 'Super Mario Bros. 3',
   genre: ['Platform'],
   release: { $numberInt: '1988' },
@@ -58,6 +58,10 @@ const gamesServiceMock = {
   async createGame({ game }) {
     // eslint-disable-next-line no-underscore-dangle
     return Promise.resolve(gamesMock[0]._id);
+  },
+
+  async deleteGame({ gameId }) {
+    return Promise.resolve(gameId);
   },
 };
 
