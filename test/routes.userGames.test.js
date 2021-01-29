@@ -18,16 +18,18 @@ describe('routes - user-games', () => {
   const request = testServer(route);
 
   describe('GET /user-games?userId=', () => {
+    const { userId } = userGamesMock[0];
+
     it('should respond with status code 200', (done) => {
-      request.get(`/api/user-games?userId=${userGamesMock[0].userId}`).expect(200, done);
+      request.get(`/api/user-games?userId=${userId}`).expect(200, done);
     });
 
     it('should respond with the list of user games', (done) => {
-      request.get(`/api/user-games?userId=${userGamesMock[0].userId}`).end((err, res) => {
+      request.get(`/api/user-games?userId=${userId}`).end((err, res) => {
         if (err) done(err);
 
         assert.deepStrictEqual(res.body, {
-          data: filteredUserGamesMock(userGamesMock[0].userId),
+          data: filteredUserGamesMock(userId),
           message: 'user games listed',
         });
 
@@ -43,7 +45,7 @@ describe('routes - user-games', () => {
         .expect(201, done);
     });
 
-    it('should respond with the created game', (done) => {
+    it('should respond with the id of created user game', (done) => {
       request.post('/api/user-games')
         .send(userGameWithoutIdMock)
         .end((err, res) => {
@@ -52,6 +54,29 @@ describe('routes - user-games', () => {
           assert.deepStrictEqual(res.body, {
             data: userGamesMock[0]._id,
             message: 'user game created',
+          });
+
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /user-games/:userGameId', () => {
+    const userGameId = userGamesMock[0]._id;
+
+    it('should respond with status code 200', (done) => {
+      request.delete(`/api/user-games/${userGameId}`)
+        .expect(200, done);
+    });
+
+    it('should respond with the id of deleted user game', (done) => {
+      request.delete(`/api/user-games/${userGameId}`)
+        .end((err, res) => {
+          if (err) done(err);
+
+          assert.deepStrictEqual(res.body, {
+            data: userGameId,
+            message: 'user game deleted',
           });
 
           done();

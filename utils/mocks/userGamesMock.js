@@ -37,7 +37,7 @@ const userGamesServiceMock = {
   },
 
   async deleteUserGame({ userGameId }) {
-    return Promise.resolve(userGamesMock[0]._id);
+    return Promise.resolve(userGameId);
   },
 };
 
