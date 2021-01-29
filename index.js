@@ -1,6 +1,9 @@
 const express = require('express');
 const { config } = require('./config/index');
+
 const gamesApi = require('./routes/games');
+const userGamesApi = require('./routes/userGames');
+
 const {
   logErrors,
   wrapErrors,
@@ -15,6 +18,7 @@ app.use(express.json());
 
 // routes
 gamesApi(app);
+userGamesApi(app);
 
 // Catch 404
 app.use(notFoundHandler);
