@@ -60,6 +60,9 @@ typings/
 # next.js build output
 .next
 
+# Optional eslint cache
+.eslintcache
+
 # OSX
 .DS_Store
 .vscode
