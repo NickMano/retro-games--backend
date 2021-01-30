@@ -1,6 +1,7 @@
 const express = require('express');
 const { config } = require('./config/index');
 
+const authApi = require('./routes/auth');
 const gamesApi = require('./routes/games');
 const userGamesApi = require('./routes/userGames');
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(express.json());
 
 // routes
+authApi(app);
 gamesApi(app);
 userGamesApi(app);
 
