@@ -3,6 +3,10 @@ const passport = require('passport');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 const apiKeysService = require('../services/apiKeys');
+const usersService = require('../services/users');
+const validationHandler = require('../utils/middleware/validationHandler');
+
+const { createUserSchema } = require('../utils/schemas/users');
 
 const { config } = require('../config');
 
@@ -56,6 +60,21 @@ const authApi = (app) => {
         next(err);
       }
     })(req, res, next);
+  });
+
+  router.post('/sign-up', validationHandler(createUserSchema), async (req, res, next) => {
+    const { body: user } = req;
+
+    try {
+      const createdUserId = await usersService.createUser({ user });
+
+      res.status(201).json({
+        data: createdUserId,
+        message: 'user created',
+      });
+    } catch (err) {
+      next(err);
+    }
   });
 };
 
