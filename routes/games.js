@@ -1,4 +1,6 @@
 const express = require('express');
+const protectRoutes = require('../utils/middleware/protectRoutes');
+
 const gamesServices = require('../services/games');
 const {
   gameIdSchema,
@@ -12,6 +14,8 @@ const { SIXTY_MINUTES_IN_SECONDS, FIVE_MINUTES_IN_SECONDS } = require('../utils/
 const gamesApi = (app) => {
   const router = express.Router();
   app.use('/api/games', router);
+
+  router.use(protectRoutes);
 
   router.get('/', async (req, res, next) => {
     cacheResponse(res, FIVE_MINUTES_IN_SECONDS);

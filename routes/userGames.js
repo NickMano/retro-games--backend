@@ -1,4 +1,6 @@
 const express = require('express');
+const protectRoutes = require('../utils/middleware/protectRoutes');
+
 const userGamesServices = require('../services/userGames');
 
 const {
@@ -14,6 +16,8 @@ const { FIVE_MINUTES_IN_SECONDS } = require('../utils/time');
 const userGamesApi = (app) => {
   const router = express.Router();
   app.use('/api/user-games', router);
+
+  router.use(protectRoutes);
 
   router.get(
     '/',
