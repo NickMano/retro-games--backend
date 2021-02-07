@@ -8,6 +8,7 @@ const {
   updateGameSchema,
 } = require('../utils/schemas/games');
 const validationHandler = require('../utils/middleware/validationHandler');
+const scopesValidationHandler = require('../utils/middleware/scopesValidationHandler');
 const cacheResponse = require('../utils/cacheResponse');
 const { SIXTY_MINUTES_IN_SECONDS, FIVE_MINUTES_IN_SECONDS } = require('../utils/time');
 
@@ -17,24 +18,29 @@ const gamesApi = (app) => {
 
   router.use(protectRoutes);
 
-  router.get('/', async (req, res, next) => {
-    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
+  router.get(
+    '/',
+    scopesValidationHandler(['read:movies']),
+    async (req, res, next) => {
+      cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
 
-    const { tags } = req.query;
+      const { tags } = req.query;
 
-    try {
-      const games = await gamesServices.getGames({ tags });
-      res.status(200).json({
-        data: games,
-        message: 'games listed',
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
+      try {
+        const games = await gamesServices.getGames({ tags });
+        res.status(200).json({
+          data: games,
+          message: 'games listed',
+        });
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
 
   router.get(
     '/:gameId',
+    scopesValidationHandler(['read:movies']),
     validationHandler({ gameId: gameIdSchema }, 'params'),
     async (req, res, next) => {
       cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
@@ -56,6 +62,7 @@ const gamesApi = (app) => {
 
   router.post(
     '/',
+    scopesValidationHandler(['create:movies']),
     validationHandler(createGameSchema),
     async (req, res, next) => {
       const { body: game } = req;
@@ -75,6 +82,7 @@ const gamesApi = (app) => {
 
   router.put(
     '/:gameId',
+    scopesValidationHandler(['update:movies']),
     validationHandler({ gameId: gameIdSchema }, 'params'),
     validationHandler(updateGameSchema),
     async (req, res, next) => {
@@ -96,6 +104,7 @@ const gamesApi = (app) => {
 
   router.delete(
     '/:gameId',
+    scopesValidationHandler(['delete:movies']),
     validationHandler({ gameId: gameIdSchema }, 'params'),
     async (req, res, next) => {
       const { gameId } = req.params;

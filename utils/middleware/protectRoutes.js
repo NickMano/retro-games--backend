@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const passport = require('passport');
 const boom = require('@hapi/boom');
 
